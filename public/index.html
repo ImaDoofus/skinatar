@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+
+<html lang='en'>
+		<head>
+			<meta charset="utf-8">
+			<meta name="viewport" content="width=device-width, initial-scale=1">
+
+			<title>Skinatar - Minecraft Avatar Maker</title>
+				<meta name="description" content="Skinatar - Create a minecraft avatars for profile pictures and more, in less than a few seconds!">
+				<meta name="author" content="ImaDoofus">
+
+				<link rel="icon" href="favicon.ico">
+				<link rel="icon" href="favicon.svg" type="image/svg+xml">
+				<link rel="apple-touch-icon" href="apple-touch-icon.png">
+
+				<link rel="preconnect" href="https://fonts.googleapis.com">
+				<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+				<link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+
+				<meta content="Skinatar - Make minecraft avatars in seconds" property="og:title">
+
+				<meta content="Input your minecraft username to generate a minecraft avatar!" property="og:description">
+
+				<meta content="Skinatar" property="og:site_name">
+
+				<meta content='favicon.ico' property='og:image'>
+
+			<style type="text/css">
+				* {
+					margin: 0px;
+					padding: 0px;
+				}
+				header {
+					background-image: url(assets/grass.png);
+					background-size: 256px;
+					height: 256px;
+					image-rendering: pixelated;
+					pointer-events: none;
+					user-select: none;
+
+				}
+				footer {
+					background-image: url(assets/stone.png);
+					background-size: 256px;
+					height: 512px;
+					image-rendering: pixelated;
+				}
+				#site-container {
+					background-image: url(assets/dirt.png);
+					background-size: 256px;
+					image-rendering: pixelated;
+					height: 1280px;
+					width: 100%;
+				}
+				#content-container {
+					margin-left: auto;
+					margin-right: auto;
+					background-color: #222;
+					padding: 25px;
+					width: 80%;
+					height: 90%;
+					box-shadow: 0px 0px 10px 5px;
+				}
+
+				#header-logo {
+					width: 90%;
+					max-width: 700px;
+					display: block;
+					margin-left: auto;
+					margin-right: auto;
+					padding-top: 80px;
+				}
+
+				/* Example Images */
+
+				#examples-container {
+					background-image: url(assets/planks.png);
+					background-size: 256px;
+					height: auto;
+					padding: 15px;
+					box-shadow: 0px 0px 10px 5px;
+				}
+				.examples-column {
+					width: 12.5%;
+					background-color: #333;
+					margin: 5px;
+					border: 1px solid black;
+					border-radius: 12px;
+					box-shadow: 1px 1px 5px 5px;
+					transition: 0.5s;
+				}
+
+				.examples-column:hover {
+					border-radius: 5px;
+					transform: scale(1.1);
+				}
+
+				.examples-row {
+					display: inline-flex;
+				}
+				.examples-picture {
+					width: 100%;
+					transition: 0.3s;
+					transform: scale(1.1);
+				}
+				.examples-picture:hover {
+					transform: scale(2);
+				}
+
+				#examples-text {
+					text-align: center;
+					font-family: "Roboto", sans-serif;
+					text-shadow: 0px 0px 5px #f00;
+					font-size: 48px;
+					color: #f00;
+					background-color: #333;
+					width: fit-content;
+					display: block;
+					margin: auto;
+					padding: 10px;
+					margin-bottom: 10px;
+					border-radius: 5px;
+					box-shadow: 1px 1px 5px 2px;
+					animation-name: examples-text-animation;
+					animation-duration: 20s;
+					animation-direction: alternate;
+					animation-iteration-count: infinite;
+				}
+
+				@keyframes examples-text-animation {
+					0% {color: #f00;text-shadow:0px 0px 5px #f00;}
+					25% {color: #ff0;text-shadow:0px 0px 5px #ff0;}
+					50% {color: #0f0;text-shadow:0px 0px 5px #0f0;}
+					75% {color: #0ff;text-shadow:0px 0px 5px #0ff;}
+					100% {color: #00f;text-shadow:0px 0px 5px #00f;}
+				}
+
+
+
+
+				/* Form Input & Result*/
+
+				#app-container {
+					font-family: 'Roboto', sans-serif;
+					font-size: calc(8px + 1.1vw);
+					background-color: #444;
+					height: auto;
+					padding: 25px;
+					margin-top: 25px;
+					box-shadow: 0px 0px 10px 5px;
+					display: flex;
+				}
+
+				form#form {
+					width: 50%;
+					min-width: 500px;
+					display: block;
+				}
+
+				#form-name-container {
+					display: inline-flex;
+					background-color: #fff;
+					border-radius: 3px;
+					padding: 15px;
+					width: 100%;
+					max-width: 90%;
+					min-width: 200px;
+				}
+				#form-name-label {
+					padding-left: 5px;
+					padding-right: 5px;
+					border-left: 3px solid black;
+				}
+				#form-name-label-uuid {
+					display: inline-block;
+					text-decoration: underline;
+				}
+				#form-name-label-uuid:hover #tooltip {
+					visibility: visible;
+				}
+				#form-name-label-uuid #tooltip {
+					visibility: hidden;
+					font-size: 14px;
+					width: 300px;
+					padding: 5px;
+					background-color: #fff;
+					border: 1px solid black;
+					position: absolute;
+				}
+				#form-name-input {
+					display: block;
+					margin-left: auto;
+					background-color: #fff;
+					width: 40%;
+					min-width: 80px;
+					outline: none;
+					border-radius: 15px;
+					transition: .35s ease-in-out;
+					font-size: calc(4px + 0.8vw);
+					text-align: center;
+				}
+				#form-name-input:hover, #form-name-input:focus {
+					background-color: #fff;
+					border-radius: 0;
+					outline: none;
+				}
+
+
+
+				#form-size-container {
+					display: inline-flex;
+					background-color: #fff;
+					border-radius: 3px;
+					padding: 15px;
+					padding-right: auto;
+					width: 100%;
+					max-width: 90%;
+					min-width: 200px;
+					margin-top: 25px;
+				}
+				#form-size-label {
+					padding-left: 5px;
+					border-left: 3px solid black;
+				}
+				#form-size-input {
+					display: block;
+					margin-left: auto;
+					background-color: #fff;
+					width: 40%;
+					min-width: 80px;
+					outline: none;
+					border-radius: 15px;
+					transition: .35s ease-in-out;
+					font-size: calc(4px + 0.8vw);
+					text-align: center;
+				}
+				#form-size-input:hover, #form-name-input:focus {
+					background-color: #fff;
+					border-radius: 0;
+					outline: none;
+				}
+
+
+
+
+
+				#form-color-container {
+					display: inline-flex;
+					border-radius: 3px;
+					background-color: #fff;
+					padding: 15px;
+					width: 100%;
+					max-width: 90%;
+					min-width: 200px;
+					margin-top: 25px;
+				}
+				#form-color-label {
+					padding-left: 5px;
+					border-left: 3px solid black;
+					/*margin-top: auto;*/
+					margin-bottom: auto;
+				}
+				#form-color-input {
+					margin-left: 10%;
+				}
+				#form-color-input:hover, #form-name-input:focus {
+					/*background-color: #fff;*/
+					outline: none;
+				}
+
+				#form-color-info {
+					margin-top: auto;
+					margin-bottom: auto;
+					margin-left: 50px;
+				}
+
+				#form-submit-container {
+					display: inline-flex;
+					border-radius: 3px;
+					background-color: #fff;
+					padding: 15px;
+					width: 100%;
+					max-width: 90%;
+					min-width: 200px;
+					margin-top: 25px;
+				}
+				#form-submit {
+					padding: 15px;
+					border: 0;
+					width: 100%;
+					font-size: calc(12px + 1.1vw);
+				}
+
+				#form-submit:hover {
+					background-color: #333;
+
+				}
+
+				#result-container {
+					text-align: center;
+					width: 100%;
+					max-width: 90%;
+					min-width: 200px;
+					background-color: #fff;
+				}
+
+				#result-image {
+					border: 2px solid black;
+					box-shadow: 0px 0px 10px 5px;
+				}
+
+				#result-image-container {
+					display: block;
+					margin: auto;
+				}
+
+			</style>
+		</head>
+
+
+		<body>
+			
+			<header>
+				<img id="header-logo" src="assets/Skinatar.png"></img>
+			</header>
+
+			<div id='site-container'>
+				<div id='content-container'>
+					<div id='examples-container'>
+						<h1 id='examples-text'>Examples</h1>
+						<div class='examples-row'>
+							<div class='examples-column'><img onmouseover='randomColor(0)'class='examples-picture' src="assets/bg.png"></img></div>
+							<div class='examples-column'><img onmouseover='randomColor(1)'class='examples-picture' src="assets/bg.png"></img></div>
+							<div class='examples-column'><img onmouseover='randomColor(2)'class='examples-picture' src="assets/bg.png"></img></div>
+							<div class='examples-column'><img onmouseover='randomColor(3)'class='examples-picture' src="assets/bg.png"></img></div>
+							<div class='examples-column'><img onmouseover='randomColor(4)'class='examples-picture' src="assets/bg.png"></img></div>
+							<div class='examples-column'><img onmouseover='randomColor(5)'class='examples-picture' src="assets/bg.png"></img></div>
+							<div class='examples-column'><img onmouseover='randomColor(6)'class='examples-picture' src="assets/bg.png"></img></div>
+							<div class='examples-column'><img onmouseover='randomColor(7)'class='examples-picture' src="assets/bg.png"></img></div>
+						</div>
+					</div>
+
+					<div id='app-container'>
+						<form onsubmit='formSubmit(event);' id='form'>
+							<div id='form-name-container'>
+								<label for='name' id='form-name-label'>Player Name or<div id='form-name-label-uuid'>UUID
+									<p id='tooltip'>The UUID (Universally Unique Identifier) replaces your Minecraft username to verify your identity. A UUID can allow players to change their name that is visible to players, without servers and server owners forgetting who the players are. Every player will get a different UUID.</p>
+								</div></label>
+
+								<input type='text' id='form-name-input' name='name' placeholder="name/uuid">
+							</div>
+							<br>
+							<div id='form-size-container'>
+								<label for='size' id='form-size-label'>Size of avatar in pixels</label>
+								<select id='form-size-input' name='size' form='form'>
+									<option value='100'>100x100 Tiktok</option>
+									<option value='200'>200x200 Discord</option>
+									<option value='300'>300x300 Youtube</option>
+									<option value='400'>400x400 Twitter</option>
+								</select>
+							</div>
+							<br>
+							<div id='form-color-container'>
+								<div style='display: block;'>
+									<label for='color' id='form-color-label'>Background Color of avatar</label>
+									<p id='form-color-info'>Color Name</p>
+								</div>
+								<div id='form-color-input'></div>
+							</div>
+
+
+							<div id='form-submit-container'>
+								<input type='submit' id='form-submit' value='Submit'>
+							</div>
+						</form>
+
+						<div id='result-container'>
+							<h2>Result</h2>
+							<div = id='result-image-container'>
+							</div>
+
+							<!-- <img src="assets/bg.png" width='100' height='100'></img> -->
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<footer>
+				footer
+			</footer>
+
+			<script src="https://cdn.jsdelivr.net/npm/@jaames/iro@5"></script>
+			<script src="https://chir.ag/projects/ntc/ntc.js"></script>
+			<script>
+
+				var clr_picker = new iro.ColorPicker("#form-color-input", {width:100,layout: [{component: iro.ui.Wheel},{component: iro.ui.Slider, options: {sliderType: 'alpha'}}]});
+				examples = document.getElementsByClassName("examples-column");
+				// var clr_picker = document.getElementById('form-color-input');
+				var clr_info = document.getElementById('form-color-info');
+				var clr_container = document.getElementById('form-color-container');
+				var clr_label = document.getElementById('form-color-label');
+				document.addEventListener('keydown', function(e) {
+					if (event.key === 'Enter') {
+						document.activeElement.blur();
+						document.getElementById("form-color").focus();
+					}
+				})
+
+				
+				function updateColor(color) {
+					console.log(color.alpha)
+					clr_info.innerHTML = '<strong>'+ntc.name(color.hexString)[1]+'</strong>';
+					clr_info.innerHTML += '<p>'+Math.round((1-color.alpha)*100)+'% transparent'+'<p>';
+					clr_container.style.background = 'linear-gradient('+color.hex8String+','+color.hex8String+'),url(assets/transparent.png)'
+					clr_container.style.backgroundSize = '150px'
+				}
+				clr_picker.on('color:change', updateColor);
+
+				async function formSubmit(e) {
+					event.preventDefault();
+					console.log(clr_picker)
+					var name = document.getElementById('form-name-input').value;
+					var size = document.getElementById('form-size-input').value;
+					var hex_color = clr_picker.color.hex8String;
+					var result = document.getElementById('result-image-container');
+					// result.innerHTML += username+size+hex_color;
+
+					// Validate
+					// There is server-side Validation as well.
+
+					var img = new Image();
+					img.src = `http://localhost:3000/avatar?uuid=${name}&size=${size}&color=${hex_color.substring(1)}`;
+					img.id = 'result-image'
+					result.innerHTML = '';
+					result.appendChild(img);
+				}
+
+				var transparent = false;
+				function transparentButton() {
+					
+					clr_picker.value = '#ffffff';
+					transparent = true;
+					clr_info.innerHTML = 'Transparent';
+					// clr_container.style.backgroundImage = "url('assets/transparent.png')";
+					// clr_info.style.color = '#000';
+					// clr_label.style.color = '#000';
+					// clr_label.style.backgroundColor = '#fff';
+					// clr_info.style.backgroundColor = '#fff';
+				}
+				for(let x = 0; x < 7; x++) {
+					randomColor(x)
+				}
+
+				function randomColor(i) {
+					var clr = Math.floor(Math.random()*16777215).toString(16);
+					console.log(transparent);
+
+					examples[i].style.backgroundColor = '#'+clr;	
+				}
+			</script>
+		</body>
+</html>
