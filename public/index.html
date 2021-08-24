@@ -429,7 +429,7 @@
 					// There is server-side Validation as well.
 
 					var img = new Image();
-					img.src = `http://localhost:3000/avatar?uuid=${name}&size=${size}&color=${hex_color.substring(1)}`;
+					img.src = `https://skinatar.herokuapp.com/avatar?uuid=${name}&size=${size}&color=${hex_color.substring(1)}`;
 					img.id = 'result-image'
 					result.innerHTML = '';
 					result.appendChild(img);
